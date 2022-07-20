@@ -51,6 +51,7 @@ export const NavBar = ({ token, setToken }) => {
                   }}>Logout</button>
                   :
                   <>
+                  <Link to="/users" className="button is-link-users">User Management</Link>
                     <Link to="/register" className="button is-link">Register</Link>
                     <Link to="/login" className="button is-outlined">Login</Link>
                   </>
