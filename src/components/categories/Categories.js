@@ -1,18 +1,22 @@
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
 import { getAllCategories } from "./CategoryManager"
+import { NewCategory } from "./NewCategory"
 
 export const Categories = () => {
     const [categories, setCategories] = useState([])
-    const navigate = useNavigate()
+
+    const retrieveCategories = () => {
+        getAllCategories()
+            .then((array) => {
+                setCategories(array)
+            })
+    }
 
     useEffect(
         () => {
-            getAllCategories()
-                .then((data) => {
-                    setCategories(data)
-                })
-        }, []
+            retrieveCategories()
+        },
+        []
     )
 
     return <>
@@ -26,5 +30,7 @@ export const Categories = () => {
                 })
             }
         </div>
+
+        <NewCategory getter={retrieveCategories}/>
     </>
 }
