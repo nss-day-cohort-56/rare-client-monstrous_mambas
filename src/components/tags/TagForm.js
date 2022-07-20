@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { saveNewTag } from "./TagManager"
+import { saveNewTag } from "./TagManager.js"
 
 export const TagForm = ({retrieveTags}) => {
 
