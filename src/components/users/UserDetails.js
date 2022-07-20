@@ -11,12 +11,12 @@ export const UserDetails = () => {
             userData => setUser(userData))
     }, [])
 
-return (<><div className="user-details">there will be user details here {user?.first_name} {user?.last_name}
+return (<><div className="user-details">{user?.first_name} {user?.last_name}
         {user?.profile_image_url ? 
-        <div><img src={user?.profile_image_url} alt="profile-pic"></img></div>
+        <div><img src={user?.profile_image_url} alt="profile-pic" /></div>
         : "" } 
-        <div>{user?.username}</div>
-        <div>{user?.creation_date}</div>
-        <div>{user?.bio}</div>
+        <div>username {user?.username}</div>
+        <div>Created On {user?.created_on}</div>
+        <div> Bio {user?.bio}</div>
     </div></>)///check and see what exactly needs to be displayed here, may need to update the get as well if joins are necessary
 }
