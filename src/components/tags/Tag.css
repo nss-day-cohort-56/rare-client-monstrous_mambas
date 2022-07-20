@@ -1,0 +1,10 @@
+.sidebyside {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.vertical {
+    display: flex;
+    flex-direction: column;
+}
