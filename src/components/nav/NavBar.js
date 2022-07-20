@@ -32,8 +32,14 @@ export const NavBar = ({ token, setToken }) => {
         <div className="navbar-start">
           {
             token
-              ?
-              <Link to="/" className="navbar-item">Posts</Link>
+              ? <>   
+                  <Link to="/posts" className="navbar-item">Posts</Link>
+                  <Link to="/my-posts" className="navbar-item">My Posts</Link>
+                  <Link to="/tags" className="navbar-item">Tag Management</Link>
+                  <Link to="/users" className="navbar-item">User Management</Link> 
+                  <Link to="/newpost" className="navbar-item">New Post</Link>    
+                  <Link to="/categories" className="navbar-item">Category Management</Link>      
+              </>
               :
               ""
           }
@@ -44,14 +50,14 @@ export const NavBar = ({ token, setToken }) => {
             <div className="buttons">
               {
                 token
-                  ?
+                  ? <>
                   <button className="button is-outlined" onClick={() => {
                     setToken('')
                     navigate('/login')
                   }}>Logout</button>
+                  </>
                   :
                   <>
-                  <Link to="/users" className="button is-link-users">User Management</Link>
                     <Link to="/register" className="button is-link">Register</Link>
                     <Link to="/login" className="button is-outlined">Login</Link>
                   </>
