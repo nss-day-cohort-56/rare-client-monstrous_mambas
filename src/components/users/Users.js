@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import {User } from "./User"
-import {getAllUsers} from "./UserManager"
+import {getAllUsers} from "../../managers/UserManager"
 
 
 export const Users = () => {
