@@ -6,7 +6,7 @@ import { Users } from "../components/users/Users"
 import { UserDetails } from "../components/users/UserDetails"
 import { TagContainer } from "../components/tags/TagContainer"
 
-import { PostList } from "../components/posts/postList"
+import { PostList } from "../components/posts/PostList"
 import { Categories } from "../components/categories/Categories"
 
 export const ApplicationViews = ({ token, setToken }) => {

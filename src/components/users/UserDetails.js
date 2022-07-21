@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
-import { getUserById } from "./UserManager"
+import { getUserById } from "../../managers/UserManager"
 
 export const UserDetails = () => {
     const { userId } = useParams()

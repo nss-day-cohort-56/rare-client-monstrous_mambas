@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { CreateNewCategory } from "./CategoryManager"
+import { CreateNewCategory } from "../../managers/CategoryManager"
 
 export const NewCategory = ({getter}) => {
 

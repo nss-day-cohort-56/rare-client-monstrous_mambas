@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { getAllCategories } from "./CategoryManager"
+import { getAllCategories } from "../../managers/CategoryManager"
 import { NewCategory } from "./NewCategory"
 
 export const Categories = () => {
