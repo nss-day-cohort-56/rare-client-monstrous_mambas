@@ -1,7 +1,7 @@
-import { TagList } from "./TagList.js"
-import { TagForm } from "./TagForm.js"
+import { TagList } from "../../managers/TagList.js"
+import { TagForm } from "../../managers/TagForm.js"
 import "./Tag.css"
-import { getAllTags } from "./TagManager.js"
+import { getAllTags } from "../../managers/TagManager.js"
 import { useEffect, useState } from "react"
 
 
