@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Post } from "./Post"
+import { Post } from "./post"
 
 
 export const PostList = ({ }) => {
