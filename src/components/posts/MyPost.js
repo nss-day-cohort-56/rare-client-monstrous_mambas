@@ -11,10 +11,11 @@ import { getAllPosts } from "../../managers/PostManager"
 import { getAllUsers } from "../../managers/UserManager"
 import { EditPost } from "./EditPost"
 import { PostForm } from "./PostForm"
+import { getPostsByUserId } from "../../managers/PostManager"
 
 
 export const MyPost = () => {
-
+    const navigate = useNavigate()
     const [myPosts, setMyPosts] = useState([])
     const [users, setUsers] = useState([])
     let navigate = useNavigate()
@@ -25,13 +26,9 @@ export const MyPost = () => {
 
     useEffect(
         () => {
-            getAllPosts()
+            getPostsByUserId(userObject)
                 .then((postArray) => {
                     setMyPosts(postArray)
-                })
-            getAllUsers()
-                .then((userArray) => {
-                    setUsers(userArray)
                 })
         },
         []
@@ -42,7 +39,7 @@ export const MyPost = () => {
             method: "DELETE"
         })
             .then(() => {
-                getAllPosts()
+                getPostsByUserId(userObject)
                     .then((postArray) => {
                         setMyPosts(postArray)
                     })
@@ -50,24 +47,18 @@ export const MyPost = () => {
     }
 
 
-    let foundUser = users.find((user) => {
-        return user.id === userObject
-    })
-
-
     return <>
         <h2 className="productList__title">My Posts:</h2>
         {
             myPosts.map(post => {
-                if (foundUser?.id === post?.user_id) {
-                    return <>{post.title}<button onClick={() => navigate(`/editpost/${post.id}`)}>edit</button><button onClick={(evt) => {
+                    return <>{post.title}<button onClick={()=> navigate(`/editpost/${post.id}`)}>edit</button>
+                    <button onClick={(evt) => {
                         evt.preventDefault()
                         if (window.confirm("Are you sure you want to delete this post?")) {
                             return deleteButton(post.id)
                             }
                     }}
                     >delete</button><br /></>
-                }
             })
         }
     </>
