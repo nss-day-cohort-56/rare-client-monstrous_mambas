@@ -2,6 +2,8 @@
 // 
 // form for new post 
 
+import { useEffect, useState } from "react"
+
 // input for all post keys 
 // checkboxes for tags
 // checkboxes for categories
@@ -14,7 +16,7 @@
 // 
 // 
 
-export const PostForm = () => {
+export const PostForm = ({post, onFormSubmit, categories}) => {
     const [editMode, setEditMode] = useState(false)
     const [updatedPost, setUpdatedPost] = useState(post)
 
@@ -43,10 +45,9 @@ export const PostForm = () => {
 
     const constructNewPost = () => {
         const copyPost = { ...updatedPost }
-        copyPost.mood_id = parseInt(copyPost.moodId)
-        if (!copyPost.date) {
-            copyPost.date = Date(Date.now()).toLocaleString('en-us').split('GMT')[0]
-        }
+        copyPost.category_id = parseInt(copyPost.categoryd)
+        copyPost.publication_date = Date(Date.now()).toLocaleString('en-us').split('GMT')[0]
+
         onFormSubmit(copyPost)
     }
 
@@ -59,54 +60,56 @@ export const PostForm = () => {
                 <div className="control">
                     <input type="text" name="title" required autoFocus className="input"
                         proptype="varchar"
-                        placeholder="title"
+                        placeholder="Title"
                         value={updatedPost.title}
                         onChange={handleControlledInputChange}
                     />
                 </div>
             </div>
             <div className="field">
-                <label htmlFor="publicationDate" className="label">Publication Date: </label>
+                <label htmlFor="image_url" className="label">Image URL: </label>
                 <div className="control">
-                    <textarea
-                        className="textarea"
-                        name="publicationDate"
-                        value={updatedPost.publicationDate}
-                        onChange={handleControlledInputChange}
-                    ></textarea>
-                </div>
-            </div>
-            <div className="field">
-                <label htmlFor="moodId" className="label">Mood: </label>
-                <div className="control">
-                    <div className="select">
-                        <select name="moodId"
-                            proptype="int"
-                            value={updatedPost.mood_id}
-                            onChange={handleControlledInputChange}>
-                                <option value="0">Select a mood</option>
-                                {moods.map(m => (
-                                    <option key={m.id} value={m.id}>
-                                        {m.label}
-                                    </option>
-                                ))}
-                        </select>
+                    <div className="control">
+                        <input type="text" name="image_url" required autoFocus className="input"
+                            proptype="varchar"
+                            placeholder="Image URL"
+                            value={updatedPost.image_url}
+                            onChange={handleControlledInputChange}
+                        />
                     </div>
                 </div>
             </div>
             <div className="field">
-                <label htmlFor="tagId" className="label">Tags: </label>
+                <label htmlFor="content" className="label">Content: </label>
                 <div className="control">
-                   {tags.map(tag => {
-                        return <>
-                        <label htmlFor={`checkbox-${tag.id}`}>{tag.name}</label>
-                        <input type="checkbox" id={`checkbox-${tag.id}`} value={tag.id}
-                        onChange={handleControlledInputChange}>
-                        </input>
-                        </>
-                    })}
+                    <div className="control">
+                        <textarea
+                            className="textarea"
+                            name="content"
+                            value={updatedPost.content}
+                            onChange={handleControlledInputChange}
+                        ></textarea>
+                    </div>
                 </div>
             </div>
+            <div className="field">
+                        <label htmlFor="categoryId" className="label">Category: </label>
+                        <div className="control">
+                            <div className="select">
+                                <select name="categoryId"
+                                    proptype="int"
+                                    value={updatedPost.category_id}
+                                    onChange={handleControlledInputChange}>
+                                        <option value="0">Select a category</option>
+                                        {categories.map(c => (
+                                            <option key={c.id} value={c.id}>
+                                                {c.label}
+                                            </option>
+                                        ))}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
             <div className="field">
                 <div className="control">
                     <button type="submit"
