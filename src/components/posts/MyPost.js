@@ -15,7 +15,6 @@ import { getPostsByUserId } from "../../managers/PostManager"
 
 
 export const MyPost = () => {
-    const navigate = useNavigate()
     const [myPosts, setMyPosts] = useState([])
     const [users, setUsers] = useState([])
     let navigate = useNavigate()
