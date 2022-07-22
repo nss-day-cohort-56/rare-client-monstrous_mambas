@@ -24,15 +24,15 @@ export const CommentList = (id) => {
 
 
     return <>
-    <h2>comments:<br /><br /></h2>
-    <div>
-        {
-            comments.map(comment => {
-                return <>
-                    {comment.content}<br />
-                </>
-            })
-        }
-    </div>
-</>
+        <h2>comments:<br /><br /></h2>
+        <div>
+            {
+                comments.map(comment => {
+                    return <>
+                        {comment.content}<br />
+                    </>
+                })
+            }
+        </div>
+    </>
 }

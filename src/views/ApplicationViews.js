@@ -25,7 +25,7 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route path="/my-posts" element={<MyPost />} />
 
         <Route path="/categories" element={<Categories />} />
-
+        <Route path="/categories" element={<Categories />} />
       </Route>
     </Routes>
   </>
