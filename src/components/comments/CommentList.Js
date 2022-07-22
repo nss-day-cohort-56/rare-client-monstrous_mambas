@@ -5,16 +5,18 @@
 // if local_user_id = user_id ? render with trashcan icon
 // else render no trash can 
 
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 import { getCommentsByPostId } from "./CommentManager"
 
 
-export const CommentList = (id) => {
+export const CommentsList = () => {
     const [comments, setComments] = useState([])
-
+    const { postId } = useParams()
 
     useEffect(
         () => {
-            getCommentsByPostId(id)
+            getCommentsByPostId(postId)
                 .then((commentArray) => {
                     setComments(commentArray)
                 })
@@ -29,7 +31,9 @@ export const CommentList = (id) => {
             {
                 comments.map(comment => {
                     return <>
-                        {comment.content}<br />
+                        {comment.content}
+
+                        <br />
                     </>
                 })
             }
