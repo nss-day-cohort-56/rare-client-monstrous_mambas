@@ -31,7 +31,7 @@ export const CommentsList = () => {
             {
                 comments.map(comment => {
                     return <>
-                        {comment.content}
+                        {comment?.content}
 
                         <br />
                     </>
