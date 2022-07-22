@@ -3,6 +3,10 @@
 // form for new post 
 
 import { useEffect, useState } from "react"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { getAllCategories } from "../../managers/CategoryManager"
+import { getAllPosts, getSinglePost, saveNewPost, updatePost } from "../../managers/PostManager"
+import { getAllTags } from "../../managers/TagManager"
 
 // input for all post keys 
 // checkboxes for tags
@@ -15,44 +19,92 @@ import { useEffect, useState } from "react"
 // POST needs to post to PostTags and to Post  
 // 
 // 
+export const PostForm = () => {
+    const [posts, setPosts] = useState([])
+    const [categories, setCategories] = useState([])
+    const [tags, setTags] = useState([])
+    const [post, setPost] = useState({})
+    const [userObj, setUserObj] = useState({})
+    const location = useLocation()
+    let navigate = useNavigate()
+    let postId = useParams()
 
-export const PostForm = ({post, onFormSubmit, categories}) => {
-    const [editMode, setEditMode] = useState(false)
-    const [updatedPost, setUpdatedPost] = useState(post)
+  useEffect(() => {
+    getAllPosts().then(data => setPosts(data))
+    getAllCategories().then(categoriesData => setCategories(categoriesData))
+    getAllTags().then(data => setTags(data))
 
+    const localUser = localStorage.getItem("auth_token")
+    const userObject = JSON.parse(localUser)
 
-    useEffect(() => {
-        setUpdatedPost(post)
-        if ('id' in post) {
-            setEditMode(true)
-        }
-        else {
-            setEditMode(false)
-        }
-    }, [post])
+    setUserObj(userObject)
+
+    console.log(location.pathname)
+    }, [])
+
+  useEffect(
+    () => {
+            setPost({
+                user_id: userObj,
+                category_id: 0,
+                title: '',
+                publication_date: '',
+                image_url: '',
+                content: '',
+                approved: 1
+              })
+    },
+    [userObj]
+  )
+
+  const getPosts = () => {
+    getAllPosts().then(data => setPosts(data))
+  }
+
+  const onFormSubmit = (postData) => {
+    if (postData.id) {
+      updatePost(postData).then(getAllPosts().then(data => setPosts(data)))
+    } else {
+      saveNewPost(postData).then(getAllPosts().then((data) => {postRoute((data.slice(-1)[0].id) + 1)}))
+    }
+    setPost({
+        user_id: userObj,
+        category_id: 0,
+        title: '',
+        publication_date: '',
+        image_url: '',
+        content: '',
+        approved: 1
+    })
+
+  } 
+
+  const postRoute = (id) => {
+    navigate(`/posts/${id}`)
+  }
 
     const handleControlledInputChange = (event) => {
         /*
             When changing a state object or array, always create a new one
             and change state instead of modifying current one
         */
-        const newPost ={...updatedPost}
+        const newPost ={...post}
         newPost[event.target.name] = event.target.value
-        setUpdatedPost(newPost)
+        setPost(newPost)
     }
 
 
 
     const constructNewPost = () => {
-        const copyPost = { ...updatedPost }
-        copyPost.category_id = parseInt(copyPost.categoryd)
+        const copyPost = { ...post }
+        copyPost.category_id = parseInt(copyPost.category_id)
         copyPost.publication_date = Date(Date.now()).toLocaleString('en-us').split('GMT')[0]
 
         onFormSubmit(copyPost)
     }
 
     return  <article className="panel is-info">
-    <h2 className="panel-heading">{editMode ? "Update post" : "Create post"}</h2>
+    <h2 className="panel-heading">Create post</h2>
     <div className="panel-block">
         <form style={{ width: "100%" }}>
             <div className="field">
@@ -61,7 +113,7 @@ export const PostForm = ({post, onFormSubmit, categories}) => {
                     <input type="text" name="title" required autoFocus className="input"
                         proptype="varchar"
                         placeholder="Title"
-                        value={updatedPost.title}
+                        value={post.title}
                         onChange={handleControlledInputChange}
                     />
                 </div>
@@ -73,7 +125,7 @@ export const PostForm = ({post, onFormSubmit, categories}) => {
                         <input type="text" name="image_url" required autoFocus className="input"
                             proptype="varchar"
                             placeholder="Image URL"
-                            value={updatedPost.image_url}
+                            value={post.image_url}
                             onChange={handleControlledInputChange}
                         />
                     </div>
@@ -86,19 +138,19 @@ export const PostForm = ({post, onFormSubmit, categories}) => {
                         <textarea
                             className="textarea"
                             name="content"
-                            value={updatedPost.content}
+                            value={post.content}
                             onChange={handleControlledInputChange}
                         ></textarea>
                     </div>
                 </div>
             </div>
             <div className="field">
-                        <label htmlFor="categoryId" className="label">Category: </label>
+                        <label htmlFor="category_id" className="label">Category: </label>
                         <div className="control">
                             <div className="select">
-                                <select name="categoryId"
+                                <select name="category_id"
                                     proptype="int"
-                                    value={updatedPost.category_id}
+                                    value={parseInt(post.category_id)}
                                     onChange={handleControlledInputChange}>
                                         <option value="0">Select a category</option>
                                         {categories.map(c => (
@@ -118,7 +170,7 @@ export const PostForm = ({post, onFormSubmit, categories}) => {
                             constructNewPost()
                         }}
                         className="button is-link">
-                        {editMode ? "Update" : "Save"}
+                        Save
                     </button>
                 </div>
             </div>

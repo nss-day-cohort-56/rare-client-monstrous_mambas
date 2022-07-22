@@ -15,8 +15,8 @@ export const saveNewPost = (post) => {
         .then(res => res.json())
 }
 
-export const updatePost = (post) => {
-    return fetch(`http://localhost:8088/posts/${post.id}`, {
+export const updatePost = (id, post) => {
+    return fetch(`http://localhost:8088/posts/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -25,3 +25,7 @@ export const updatePost = (post) => {
     })
   };
   
+export const getSinglePost = (id) => {
+    return fetch(`http://localhost:8088/posts/${id}`)
+    .then(res => res.json())
+}

@@ -8,7 +8,9 @@ import { TagContainer } from "../components/tags/TagContainer"
 
 import { Categories } from "../components/categories/Categories"
 import { MyPost } from "../components/posts/MyPost"
-import { PostContainer } from "../components/posts/PostContainer"
+import { PostForm } from "../components/posts/PostForm"
+import { PostList } from "../components/posts/postList"
+import { EditPost } from "../components/posts/EditPost"
 
 export const ApplicationViews = ({ token, setToken }) => {
   return <>
@@ -21,8 +23,10 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route path="/users" element={<Users />} />
         <Route path="users/:userId/" element={<UserDetails />} />
 
-        <Route path="/posts" element={<PostContainer />} />
+        <Route path="/posts" element={<PostList />} />
         <Route path="/my-posts" element={<MyPost />} />
+        <Route path="/newpost" element={<PostForm />} />
+        <Route path="/editpost/:postId" element={<EditPost />} />
 
         <Route path="/categories" element={<Categories />} />
 
