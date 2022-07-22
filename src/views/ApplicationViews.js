@@ -8,9 +8,13 @@ import { TagContainer } from "../components/tags/TagContainer"
 
 import { Categories } from "../components/categories/Categories"
 import { MyPost } from "../components/posts/MyPost"
+
+import {PostDetails} from "../components/posts/PostDetails"
+
 import { PostForm } from "../components/posts/PostForm"
 import { PostList } from "../components/posts/postList"
 import { EditPost } from "../components/posts/EditPost"
+
 
 export const ApplicationViews = ({ token, setToken }) => {
   return <>
@@ -29,7 +33,7 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route path="/editpost/:postId" element={<EditPost />} />
 
         <Route path="/categories" element={<Categories />} />
-
+        <Route path="posts/:post_id/" element={<PostDetails />} />
       </Route>
     </Routes>
   </>
