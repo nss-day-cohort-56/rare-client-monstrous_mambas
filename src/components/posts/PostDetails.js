@@ -36,7 +36,7 @@ return <section>
         <div>{postDetails?.title}</div>
     <div>{postDetails?.user?.first_name} {postDetails?.user?.last_name}</div>
     <div>{postDetails?.category?.label}</div>
-    <div>{postDetails?.publicationDate}</div>
+    <div>{postDetails?.publication_date}</div>
     <div>{postDetails?.content}</div>
     <button><Link to={`/comments/${post_id}`} >View Comments</Link></button>
     <button><Link to={`/addcomment/${post_id}`} >Add Comments</Link></button>
@@ -47,7 +47,7 @@ return <section>
     <div>{postDetails?.title}</div>
     <div>{postDetails?.user?.first_name} {postDetails?.user?.last_name}</div>
     <div>{postDetails?.category?.label}</div>
-    <div>{postDetails?.publicationDate}</div>
+    <div>{postDetails?.publication_date}</div>
     <div>{postDetails?.content}</div>
     <button><Link to={`/comments/${post_id}`} >View Comments</Link></button>
     <button><Link to={`/addcomment/${post_id}`} >Add Comments</Link></button>
