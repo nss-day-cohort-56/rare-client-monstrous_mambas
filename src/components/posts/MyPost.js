@@ -6,11 +6,12 @@
 // when ok is clicked DELETE fetch 
 // re-render
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import { getPostsByUserId } from "../../managers/PostManager"
 
 
 export const MyPost = () => {
-
+    const navigate = useNavigate()
     const [myPosts, setMyPosts] = useState([])
 
     const localUser = localStorage.getItem("auth_token")
@@ -44,7 +45,8 @@ export const MyPost = () => {
         <h2 className="productList__title">My Posts:</h2>
         {
             myPosts.map(post => {
-                    return <>{post.title}<button>edit</button><button onClick={(evt) => {
+                    return <>{post.title}<button onClick={()=> navigate(`/newpost/${post.id}`)}>edit</button>
+                    <button onClick={(evt) => {
                         evt.preventDefault()
                         if (window.confirm("Are you sure you want to delete this post?")) {
                             return deleteButton(post.id)
