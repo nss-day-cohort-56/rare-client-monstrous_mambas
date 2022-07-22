@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { getAllTags } from "./TagManager.js"
+import { getAllTags } from "../../managers/TagManager"
 
 
 export const TagList = ({ tags }) => {
