@@ -35,7 +35,7 @@ export const ApplicationViews = ({ token, setToken }) => {
 
         <Route path="/categories" element={<Categories />} />
         <Route path="posts/:post_id/" element={<PostDetails />} />
-        <Route path="/addcomment/:post_id/" element={<CommentForm />} />
+        <Route path="/addcomment/:postId" element={<CommentForm />} />
       </Route>
     </Routes>
   </>
