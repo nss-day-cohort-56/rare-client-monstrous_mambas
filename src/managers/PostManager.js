@@ -15,6 +15,12 @@ export const saveNewPost = (post) => {
         .then(res => res.json())
 }
 
+export const getPostById = id => {
+    return fetch(`http://localhost:8088/posts/${id}`)
+    .then(res => res.json())
+};
+
+
 export const updatePost = (id, post) => {
     return fetch(`http://localhost:8088/posts/${id}`, {
       method: "PUT",
@@ -33,3 +39,4 @@ export const getPostsByUserId = (id) => {
     return fetch(`http://localhost:8088/posts?user_id=${id}`)
     .then(res => res.json())
 };
+
