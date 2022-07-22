@@ -33,7 +33,7 @@ export const MyPost = () => {
             method: "DELETE"
         })
             .then(() => {
-                getAllPosts()
+                getPostsByUserId(userObject)
                     .then((postArray) => {
                         setMyPosts(postArray)
                     })
