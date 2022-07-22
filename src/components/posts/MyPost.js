@@ -6,8 +6,7 @@
 // when ok is clicked DELETE fetch 
 // re-render
 import { useState, useEffect } from "react"
-import { getAllPosts, getPostsByUserId } from "../../managers/PostManager"
-import { getAllUsers } from "../../managers/UserManager"
+import { getPostsByUserId } from "../../managers/PostManager"
 
 
 export const MyPost = () => {
