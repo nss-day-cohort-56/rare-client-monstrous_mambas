@@ -1,4 +1,5 @@
 // handel all fetch calls for post 
+// 
 
 export const getAllPosts = () => {
     return fetch("http://localhost:8088/posts")
