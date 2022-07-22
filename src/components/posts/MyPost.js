@@ -7,12 +7,17 @@
 // re-render
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { getAllPosts } from "../../managers/PostManager"
+import { getAllUsers } from "../../managers/UserManager"
+import { EditPost } from "./EditPost"
+import { PostForm } from "./PostForm"
 import { getPostsByUserId } from "../../managers/PostManager"
 
 
 export const MyPost = () => {
-    const navigate = useNavigate()
     const [myPosts, setMyPosts] = useState([])
+    const [users, setUsers] = useState([])
+    let navigate = useNavigate()
 
     const localUser = localStorage.getItem("auth_token")
     const userObject = JSON.parse(localUser)
@@ -45,7 +50,7 @@ export const MyPost = () => {
         <h2 className="productList__title">My Posts:</h2>
         {
             myPosts.map(post => {
-                    return <>{post.title}<button onClick={()=> navigate(`/newpost/${post.id}`)}>edit</button>
+                    return <>{post.title}<button onClick={()=> navigate(`/editpost/${post.id}`)}>edit</button>
                     <button onClick={(evt) => {
                         evt.preventDefault()
                         if (window.confirm("Are you sure you want to delete this post?")) {
