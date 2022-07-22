@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { getAllCategories } from "../../managers/CategoryManager"
-import { getAllPosts, getPostsByCategory } from "../../managers/PostManager"
+import { getAllPosts, getPostsByCategory, getPostsByUserId } from "../../managers/PostManager"
+import { getAllUsers } from "../../managers/UserManager"
 import { Post } from "./post"
 
 
@@ -9,11 +10,14 @@ export const PostList = () => {
     const [filteredPosts, setFiltered] = useState([])
     const [chosenCat, setChosenCategory] = useState(0)
     const [categoryList, setCategories] = useState([])
+    const [chosenUser, setChosenUser] = useState(0)
+    const [userList, setUsers] = useState([])
 
     useEffect(
         () => {
             getAllPosts().then(data => setPosts(data))
             getAllCategories().then(data => setCategories(data))
+            getAllUsers().then(data => setUsers(data))
         },
         []
     )
@@ -33,6 +37,21 @@ export const PostList = () => {
         [chosenCat, posts]
     )
 
+    useEffect(
+        () => {
+            if(chosenUser === 0) {
+                setFiltered(posts)
+            }
+            else {
+                getPostsByUserId(chosenUser)
+                    .then((data) => {
+                        setFiltered(data)
+                    })
+            }
+        },
+        [chosenUser, posts]
+    )
+
     return <article className="has-background-white-ter pt-4 pr-5 pl-5">
            <select className="categoryFilter" onChange={(event) => {
                             let chosenCategory = event.target.value
@@ -41,6 +60,15 @@ export const PostList = () => {
         <option value="0">Search by Category...</option>
         {categoryList.map(category => {
             return <option value={`${category.id}`}>{category.label}</option>
+        })}
+            </select>
+            <select className="userFilter" onChange={(event) => {
+                            let chosen = event.target.value
+                            setChosenUser(parseInt(chosen))
+                        }}>
+        <option value="0">Search by User...</option>
+        {userList.map(user => {
+            return <option value={`${user.id}`}>{user.first_name}</option>
         })}
             </select>
            {
