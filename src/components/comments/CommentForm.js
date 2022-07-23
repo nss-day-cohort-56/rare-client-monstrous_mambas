@@ -6,15 +6,16 @@ import { saveNewComment } from "../../managers/CommentManager"
 import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { useEffect } from "react"
-
+import { useNavigate } from "react-router-dom"
 
 export const CommentForm = () => {
     const { postId } = useParams()
+    //const navigate = useNavigate()
 
     const localUser = localStorage.getItem("auth_token")
     const userObject = JSON.parse(localUser)
     const [comment, setComment] = useState({
-        user_id: userObject,
+            author_id: userObject,
             post_id: parseInt(postId),
             content: ""
     })
@@ -23,7 +24,7 @@ export const CommentForm = () => {
     const handleSaveButtonClick = (event) => {
         event.preventDefault()
         saveNewComment(comment)
-        //redirect to main comment page
+        //navigate(`/comments/${postId}`)
     }
 
     return (
