@@ -5,16 +5,15 @@ import { Authorized } from "./Authorized"
 import { Users } from "../components/users/Users"
 import { UserDetails } from "../components/users/UserDetails"
 import { TagContainer } from "../components/tags/TagContainer"
-
 import { Categories } from "../components/categories/Categories"
 import { MyPost } from "../components/posts/MyPost"
-
 import {PostDetails} from "../components/posts/PostDetails"
-
 import { PostForm } from "../components/posts/PostForm"
 import { PostList } from "../components/posts/postList"
 import { EditPost } from "../components/posts/EditPost"
-import {CommentForm} from "../components/comments/CommentForm"
+import {CommentForm} from "../components/comments/CommentForm
+import { CommentsList } from "../components/comments/CommentList"
+
 
 
 export const ApplicationViews = ({ token, setToken }) => {
@@ -34,6 +33,7 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route path="/editpost/:postId" element={<EditPost />} />
 
         <Route path="/categories" element={<Categories />} />
+        <Route path="/comments/:postId" element={<CommentsList />} />
         <Route path="posts/:post_id/" element={<PostDetails />} />
         <Route path="/addcomment/:postId" element={<CommentForm />} />
       </Route>
