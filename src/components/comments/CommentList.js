@@ -7,7 +7,9 @@
 
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { getCommentsByPostId } from "./CommentManager"
+import { deleteComment, getCommentsByPostId } from "./CommentManager"
+import { FaTrashAlt } from 'react-icons/fa';
+import './Comment.css'
 
 
 export const CommentsList = () => {
@@ -24,17 +26,29 @@ export const CommentsList = () => {
         []
     )
 
+    const deleteButton = (id) => {
+        return deleteComment(id)
+            .then(() => {
+                getCommentsByPostId(postId)
+                    .then((commentArray) => {
+                        setComments(commentArray)
+                    })
+            })
+    }
+
 
     return <>
         <h2>comments:<br /><br /></h2>
         <div>
             {
                 comments.map(comment => {
-                    return <>
-                        {comment?.content}
-
+                    return <div className="inLine">
+                        {comment?.content} <div>< FaTrashAlt onClick={() => {
+                            deleteButton(comment.id)
+                        }
+                        }/></div>
                         <br />
-                    </>
+                    </div>
                 })
             }
         </div>
