@@ -16,6 +16,9 @@ export const CommentsList = () => {
     const [comments, setComments] = useState([])
     const { postId } = useParams()
 
+    const localUser = localStorage.getItem("auth_token")
+    const userObject = JSON.parse(localUser)
+
     useEffect(
         () => {
             getCommentsByPostId(postId)
@@ -43,10 +46,14 @@ export const CommentsList = () => {
             {
                 comments.map(comment => {
                     return <div className="inLine">
-                        {comment?.content} <div>< FaTrashAlt onClick={() => {
-                            deleteButton(comment.id)
-                        }
-                        }/></div>
+                        {comment?.content} <div>
+                            {userObject === comment.author_id
+                                ? < FaTrashAlt onClick={() => {
+                                    deleteButton(comment.id)
+                                }
+                                } />
+                                : <></>
+                            }</div>
                         <br />
                     </div>
                 })
