@@ -11,7 +11,7 @@ import {PostDetails} from "../components/posts/PostDetails"
 import { PostForm } from "../components/posts/PostForm"
 import { PostList } from "../components/posts/postList"
 import { EditPost } from "../components/posts/EditPost"
-import {CommentForm} from "../components/comments/CommentForm
+import {CommentForm} from "../components/comments/CommentForm"
 import { CommentsList } from "../components/comments/CommentList"
 
 
