@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { getAllCategories } from "../../managers/CategoryManager"
-import { getAllPosts, getPostsByCategory, getPostsByUserId } from "../../managers/PostManager"
+import { getAllPosts, getPostsByCategory, getPostsByTitle, getPostsByUserId } from "../../managers/PostManager"
 import { getAllUsers } from "../../managers/UserManager"
 import { Post } from "./post"
 
@@ -12,6 +12,7 @@ export const PostList = () => {
     const [categoryList, setCategories] = useState([])
     const [chosenUser, setChosenUser] = useState(0)
     const [userList, setUsers] = useState([])
+    const [searchTerms, setSearchTerms] = useState("")
 
     useEffect(
         () => {
@@ -52,6 +53,18 @@ export const PostList = () => {
         [chosenUser, posts]
     )
 
+    useEffect(
+        () => {
+            if (searchTerms !== "") {
+                getPostsByTitle(searchTerms).then(data => setFiltered(data))
+            } 
+            else {
+                setFiltered(posts)
+            }
+        },
+        [searchTerms, posts]
+    )
+
     return <article className="has-background-white-ter pt-4 pr-5 pl-5">
            <select className="categoryFilter" onChange={(event) => {
                             let chosenCategory = event.target.value
@@ -71,6 +84,18 @@ export const PostList = () => {
             return <option value={`${user.id}`}>{user.first_name}</option>
         })}
             </select>
+        <div className="searchBar">
+            <input 
+                type="text" 
+                placeholder="Input Title or Keyword..."
+                onChange={
+                    (changeEvent) => {
+                        let search = changeEvent.target.value
+                        setSearchTerms(search)
+                    }
+                }
+                />
+        </div>
            {
               filteredPosts.map(post => <Post key={` all_post--${post.id}`} id={post.id} name={post?.user?.first_name} title={post.title} category={post?.category?.label} />) 
            }
