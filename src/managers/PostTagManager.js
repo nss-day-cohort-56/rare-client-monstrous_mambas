@@ -14,6 +14,8 @@ export const getPostTagsByPost = (id) => {
         .then(res => res.json())
 };
 
+
+
 export const updatePostTag = (id, posttag) => {
     return fetch(`http://localhost:8088/posttags/${id}`, {
         method: "PUT",
@@ -21,5 +23,11 @@ export const updatePostTag = (id, posttag) => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(posttag)
+    })
+};
+
+export const deletePostTag = (postTagId) => {
+    return fetch(`http://localhost:8088/posttags/${postTagId}`, {
+        method: "DELETE"
     })
 };

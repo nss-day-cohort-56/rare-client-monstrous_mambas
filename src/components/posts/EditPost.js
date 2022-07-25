@@ -9,7 +9,7 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { getAllCategories } from "../../managers/CategoryManager"
 import { getAllPosts, getSinglePost, updatePost } from "../../managers/PostManager"
-import { getPostTagsByPost } from "../../managers/PostTagManager"
+import { deletePostTag, getPostTagsByPost, saveNewPostTag, updatePostTag } from "../../managers/PostTagManager"
 import { getAllTags } from "../../managers/TagManager"
 
 // input for all post keys 
@@ -29,7 +29,9 @@ export const EditPost = () => {
     const [newPost, setUpdatePost] = useState({})
     const [categories, setCategories] = useState([])
     const [tags, setTags] = useState([])
+    const [postTags, setPostTags] = useState([])
     const [userObj, setUserObj] = useState({})
+    const [newPostTag, setNewPostTag] = useState([])
     const { postId } = useParams()
     let navigate = useNavigate()
 
@@ -37,6 +39,7 @@ export const EditPost = () => {
         () => {
             getSinglePost(postId).then(data => setPost(data))
             getAllCategories().then(categoriesData => setCategories(categoriesData))
+            getPostTagsByPost(postId).then(data => setPostTags(data))
             getAllTags().then(data => setTags(data))
 
             const localUser = localStorage.getItem("auth_token")
@@ -65,13 +68,30 @@ export const EditPost = () => {
         [userObj, post]
     )
 
+    const tagArr = (tagId) => {
+        let tagArray = [...newPostTag] 
+        tagArray.push(tagId)
+        setNewPostTag(tagArray)
+    }
+
     const constructNewPost = () => {
         onFormSubmit(newPost)
-
     }
 
     const onFormSubmit = (postData) => {
         updatePost(postId, postData)
+        postTags.map(pt => {
+            if (pt.post_id === parseInt(postId)) {
+                deletePostTag(pt.id)
+            }
+        })
+        newPostTag.map(tag => {
+            let posttag = {
+                post_id: postId,
+                tag_id: tag
+            }
+            saveNewPostTag(posttag)
+        })
         postRoute(postId)
     }
 
@@ -153,9 +173,9 @@ export const EditPost = () => {
                     {
                         tags.map(tag => {
                             return <><input type="checkbox" name={tag.label}
-                                // onClick={() => {
-                                //     tagArr(tag.id)
-                                // }} 
+                                onClick={() => {
+                                    tagArr(tag.id)
+                                }} 
                                 />
                                 <label htmlFor={tag.label}>{tag?.label}</label><br /></>
                         })
