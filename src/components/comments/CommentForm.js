@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom"
 
 export const CommentForm = () => {
     const { postId } = useParams()
-    //const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const localUser = localStorage.getItem("auth_token")
     const userObject = JSON.parse(localUser)
@@ -24,7 +24,7 @@ export const CommentForm = () => {
     const handleSaveButtonClick = (event) => {
         event.preventDefault()
         saveNewComment(comment)
-        //navigate(`/comments/${postId}`)
+        navigate(`/comments/${postId}`)
     }
 
     return (
