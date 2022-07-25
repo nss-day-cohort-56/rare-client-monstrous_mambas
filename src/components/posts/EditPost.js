@@ -9,6 +9,7 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { getAllCategories } from "../../managers/CategoryManager"
 import { getAllPosts, getSinglePost, updatePost } from "../../managers/PostManager"
+import { getPostTagsByPost } from "../../managers/PostTagManager"
 import { getAllTags } from "../../managers/TagManager"
 
 // input for all post keys 

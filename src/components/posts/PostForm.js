@@ -59,9 +59,6 @@ export const PostForm = () => {
         [userObj]
     )
 
-    const getPosts = () => {
-        getAllPosts().then(data => setPosts(data))
-    }
 
     const tagArr = (tagId) => {
         let tagArray = [...newPostTag] 
