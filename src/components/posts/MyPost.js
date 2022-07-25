@@ -6,7 +6,7 @@
 // when ok is clicked DELETE fetch 
 // re-render
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { getAllPosts } from "../../managers/PostManager"
 import { getAllUsers } from "../../managers/UserManager"
 import { EditPost } from "./EditPost"
@@ -50,7 +50,7 @@ export const MyPost = () => {
         <h2 className="productList__title">My Posts:</h2>
         {
             myPosts.map(post => {
-                    return <>{post.title}<button onClick={()=> navigate(`/editpost/${post.id}`)}>edit</button>
+                    return <><Link to={`/posts/${post.id}`}>{post.title}</Link><button onClick={()=> navigate(`/editpost/${post.id}`)}>edit</button>
                     <button onClick={(evt) => {
                         evt.preventDefault()
                         if (window.confirm("Are you sure you want to delete this post?")) {
