@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { getAllCategories } from "../../managers/CategoryManager"
-import { getAllPosts, getPostsByCategory, getPostsByTitle, getPostsByUserId } from "../../managers/PostManager"
+import { getAllPosts, getPostsByCategory, getPostsByTag, getPostsByTitle, getPostsByUserId } from "../../managers/PostManager"
+import { getAllTags } from "../../managers/TagManager"
 import { getAllUsers } from "../../managers/UserManager"
 import { Post } from "./post"
 
@@ -9,7 +10,10 @@ export const PostList = () => {
     const [posts, setPosts] = useState([])
     const [filteredPosts, setFiltered] = useState([])
     const [chosenCat, setChosenCategory] = useState(0)
+    const [chosenTag, setChosenTag] = useState(0)
     const [categoryList, setCategories] = useState([])
+    const [tagList, setTags] = useState([])
+
     const [chosenUser, setChosenUser] = useState(0)
     const [userList, setUsers] = useState([])
     const [searchTerms, setSearchTerms] = useState("")
@@ -19,6 +23,7 @@ export const PostList = () => {
             getAllPosts().then(data => setPosts(data))
             getAllCategories().then(data => setCategories(data))
             getAllUsers().then(data => setUsers(data))
+            getAllTags().then(data => setTags(data))
         },
         []
     )
@@ -36,6 +41,21 @@ export const PostList = () => {
             }
         },
         [chosenCat, posts]
+    )
+
+    useEffect(
+        () => {
+            if(chosenTag === 0) {
+                setFiltered(posts)
+            }
+            else {
+                getPostsByTag(chosenTag)
+                    .then((data) => {
+                        setFiltered(data)
+                    })
+            }
+        },
+        [chosenTag, posts]
     )
 
     useEffect(
@@ -73,6 +93,15 @@ export const PostList = () => {
         <option value="0">Search by Category...</option>
         {categoryList.map(category => {
             return <option value={`${category.id}`}>{category.label}</option>
+        })}
+            </select>
+            <select className="tagFilter" onChange={(event) => {
+                            let chosenTag = event.target.value
+                            setChosenTag(parseInt(chosenTag))
+                        }}>
+        <option value="0">Search by Tag...</option>
+        {tagList.map(tag => {
+            return <option value={`${tag.id}`}>{tag.label}</option>
         })}
             </select>
             <select className="userFilter" onChange={(event) => {
